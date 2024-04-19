@@ -1,19 +1,36 @@
+
 <div class="container">
     <form [formGroup]="form" (ngSubmit)="enviar()">
   
       <div class="mb-3 w-50">
-        <label for="name" class="form-label">Name</label>
-        <input type="text" class="form-control" id="name" formControlName="name" placeholder="Type your name">
+        <label for="name" class="form-label">Name<span class="indicate"> *</span></label>
+        <input 
+        [ngClass]="{'is-invalid': hasError('name','required') || hasError('name','minlength') || hasError('name','invalidName')}"
+         type="text" class="form-control" id="name" formControlName="name" placeholder="Type your name">
+        <p *ngIf="hasError('name','required')" class="text-danger">This field is required.</p>
+        <p *ngIf="hasError('name','minlength')" class="text-danger">Your name must have al least (5) character's.</p>
+        <p *ngIf="hasError('name','invalidName')" class="text-danger">Your name must have upper and lower case letters.</p>
+
       </div>
   
       <div class="mb-3 w-50">
-        <label for="lastName" class="form-label">Last name</label>
-        <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Type your last name">
+        <label for="lastName" class="form-label">Last name <span class="indicate"> *</span></label>
+        <input
+        [ngClass]="{'is-invalid':hasError('lastName','required') || hasError('lastName','invalidName')}"
+        type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Type your last name">
+        <p *ngIf="hasError('lastName','required')" class="text-danger">This field is required.</p>
+        <p *ngIf="hasError('lastName','invalidName')" class="text-danger">Your last name must have upper and lower case letters.</p>
+
       </div>
   
       <div class="mb-3 w-50">
-        <label for="email" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="email" formControlName="email" placeholder="Type your email">
+        <label for="email" class="form-label">Email address <span class="indicate"> *</span></label>
+        <input
+        [ngClass]="{'is-invalid':hasError('email','required')||hasError('email','email') || hasError('email','isInvalidEmail')}"
+         type="email" class="form-control" id="email" formControlName="email" placeholder="Type your email">
+        <p *ngIf="hasError('email','required')" class="text-danger">This field is required.</p>
+        <p *ngIf="hasError('email', 'email') || hasError('email', 'isInvalidEmail')" class="text-danger">Email format is invalid.</p>
+
       </div>
   
       <button type="submit" class="btn btn-primary">Register</button>

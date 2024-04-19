@@ -1,0 +1,8 @@
+.nav a{
+    font-size: 22px;
+
+}
+.nav a:hover{
+    color: white;
+    cursor: pointer;
+}

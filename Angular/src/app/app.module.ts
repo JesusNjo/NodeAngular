@@ -11,6 +11,8 @@ import { ProductComponent } from './product/product.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ClientComponent } from './client/client.component';
 import { RegisterComponent } from './register/register.component';
+import { ProductGridComponent } from './product/product-grid/product-grid.component';
+import { ProductListComponent } from './product/product-list/product-list.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { RegisterComponent } from './register/register.component';
     ProductComponent,
     ProductDetailComponent,
     ClientComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProductGridComponent,
+    ProductListComponent
   ],
   imports: [
     BrowserModule,
