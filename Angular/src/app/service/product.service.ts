@@ -25,6 +25,11 @@ export class ProductService {
 
   //Create product
   public createProduct(product:Product):Observable<Product>{
-    return this.httpClient.post<Product>(`${this.httpClient}/register`,product);
+    return this.httpClient.post<Product>(`${this.urlBase}/register`,product);
+  }
+
+  //Modify product
+  public modifyProduct(id:number,product:Product):Observable<Product>{
+    return this.httpClient.put<Product>(`${this.urlBase}/${id}`,product);
   }
 }

@@ -83,3 +83,67 @@ export const getProductById = async (req:Request,res:Response):Promise<void>=>{
         
     }
 }
+
+
+export const modifyProductById = async (req: Request, res: Response): Promise<void> => {
+    const { name, price, description } = req.body;
+    const{id}= req.params;
+    
+    try {
+        const existingProduct = await prisma.findUnique({ where: { id: Number(id) } });
+        
+        if (!existingProduct) {
+            res.status(404).json({ message: 'Product not found' });
+            return;
+        }
+
+        let updatedName = name !== undefined ? name : existingProduct.name;
+        let updatedPrice = price !== undefined ? price : existingProduct.price;
+        let updatedDescription = description !== undefined ? description : existingProduct.description;
+
+        let updatedProduct = await prisma.update({
+            where: { id: Number(id) },
+            data: {
+                name: updatedName,
+                price: updatedPrice,
+                description: updatedDescription
+            }
+        });
+
+        res.status(200).json(updatedProduct);
+    } catch (error) {
+        console.error('Error modifying product:', error);
+        res.status(500).json({ message: 'An error occurred while modifying the product' });
+    }
+};
+
+
+export const productOrder = async (req: Request, res: Response): Promise<void> => {
+    const { sortBy } = req.params;
+
+    if (!sortBy) {
+        res.status(400).json({ message: 'SortBy parameter is missing' });
+        return;
+    }
+
+    const validFields = ['id', 'name', 'price'];
+
+    if (!validFields.includes(sortBy)) {
+        res.status(400).json({ message: 'Invalid sortBy field' });
+        return;
+    }
+
+    try {
+        const products = await prisma.findMany({
+            orderBy: {
+                [sortBy]: 'asc'
+            }
+        });
+
+        res.status(200).json(products);
+    } catch (error) {
+        console.error('Error retrieving products:', error);
+        res.status(500).json({ message: 'An error occurred while retrieving products' });
+    }
+};
+
